@@ -1,4 +1,7 @@
 #здесь находятся локаторы и методы общих элементов
+import time
+from time import sleep
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
@@ -13,6 +16,8 @@ def wait_element_to_be_visible(driver, locator, timeout=5):
 def scroll_to_element(driver, locator):
     return driver.execute_script("arguments[0].scrollIntoView();", driver.find_element(*locator))
 
+def wait_element_to_be_invisible(driver, locator, timeout=5):
+    return WebDriverWait(driver, timeout).until(expected_conditions.invisibility_of_element_located(locator))
 
 class ScooterBasePage:
 
@@ -27,4 +32,5 @@ class ScooterBasePage:
     close_cookies_modal_button = (By.ID, 'rcc-confirm-button') #кнопка закрытия модалки про куки
 
     def close_cookie_modal(self, driver):
-        wait_element_to_be_clickable(driver, driver.find_element(*self.close_cookies_modal_button))
+        wait_element_to_be_clickable(driver, driver.find_element(*self.close_cookies_modal_button)).click()
+        time.sleep(2)
