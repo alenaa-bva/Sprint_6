@@ -39,7 +39,7 @@ class OrderPageLocators:
 class HomePageLocators:
     header = ".//div[@class='Home_Header__iJKdX' and contains(text(), 'Самокат')]" # Заголовок, начинающийся с "Самокат"
     middle_order_button = ".//div[contains(@class, 'Home_FinishButton')]/button[text()='Заказать']" # кнопка Заказать внизу страницы
-    questions_data = [
+    questions = [
         ".//div[@class='accordion']/div[1]",
         ".//div[@class='accordion']/div[2]",
         ".//div[@class='accordion']/div[3]",

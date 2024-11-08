@@ -1,11 +1,11 @@
 class BasePageData:
-    home_page_url = "https://qa-scooter.praktikum-services.ru/"
-    order_page_url = "https://qa-scooter.praktikum-services.ru/order"
-    track_page_url = "https://qa-scooter.praktikum-services.ru/track"
-    dzen_url = "https://dzen.ru"
+    HOME_PAGE_URL = "https://qa-scooter.praktikum-services.ru/"
+    ORDER_PAGE_URL = "https://qa-scooter.praktikum-services.ru/order"
+    TRACK_PAGE_URL = "https://qa-scooter.praktikum-services.ru/track"
+    DZEN_URL = "https://dzen.ru"
 
 class HomePageData:
-    answers_data = [
+    ANSWERS_DATA = [
         'Сутки — 400 рублей. Оплата курьеру — наличными или картой.',
         'Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим.',
         'Допустим, вы оформляете заказ на 8 мая. Мы привозим самокат 8 мая в течение дня. Отсчёт времени аренды начинается с момента, когда вы оплатите заказ курьеру. Если мы привезли самокат 8 мая в 20:30, суточная аренда закончится 9 мая в 20:30.',
@@ -16,8 +16,19 @@ class HomePageData:
         'Да, обязательно. Всем самокатов! И Москве, и Московской области.'
     ]
 
+    QUESTIONS_DATA = [
+        'Сколько это стоит? И как оплатить?',
+        'Хочу сразу несколько самокатов! Так можно?',
+        'Как рассчитывается время аренды?',
+        'Можно ли заказать самокат прямо на сегодня?',
+        'Можно ли продлить заказ или вернуть самокат раньше?',
+        'Вы привозите зарядку вместе с самокатом?',
+        'Можно ли отменить заказ?',
+        'Я жизу за МКАДом, привезёте?'
+    ]
+
 class OrderPageData:
-    set_of_customer_data = [
+    SET_OF_CUSTOMER_DATA = [
         {"first_name": "Алена", "last_name": "Ибрагимова", "address": "Москва", "phone": "+7911111111",
          "comment": "Как можно быстрее"},
         {"first_name": "ав", "last_name": "ав", "address": "Лесная 35", "phone": "80000000000", "comment": ""}

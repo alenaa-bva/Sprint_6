@@ -1,76 +1,63 @@
 from selenium.webdriver.common.by import By
 from locators import OrderPageLocators, HomePageLocators, BasePageLocators
-from helpers import switch_to_tab_with_url, wait_element_to_be_visible
 from pages.scooter_base_page import ScooterBasePage
 
 
-class ScooterHomePage:
+class ScooterHomePage(ScooterBasePage):
 
     def __init__(self, driver):
+        super().__init__(driver)
         self.driver = driver
 
-    @staticmethod
-    def get_answer_by_click_on_question(driver, index = 0):
+    def get_answer_by_click_on_question(self, driver):
         driver.get(BasePageLocators.home_page_url)
 
-        scooter_base_page_object = ScooterBasePage(driver)
+        self.wait_element_to_be_visible(driver, (By.XPATH, BasePageLocators.scooter_logo))
 
-        wait_element_to_be_visible(driver, (By.XPATH, BasePageLocators.scooter_logo))
+        self.close_cookie_modal()
 
-        ScooterBasePage.close_cookie_modal(driver)
-
-        actual_answers = []
+        actual_questions_and_answers = {}
 
         #проверяем ответы на вопросы через цикл
-        for question_xpath, answer_xpath  in zip(HomePageLocators.questions_data, HomePageLocators.answers):
+        for question_xpath, answer_xpath  in zip(HomePageLocators.questions, HomePageLocators.answers):
 
-            scooter_base_page_object.click_on_the_element(question_xpath)
+            self.click_on_the_element(question_xpath)
 
-            wait_element_to_be_visible(driver, (By.XPATH, answer_xpath))
+            self.wait_element_to_be_visible(driver, (By.XPATH, answer_xpath))
 
-            actual = driver.find_element(By.XPATH, answer_xpath).text
-            actual_answers.append(actual)
+            actual_question = driver.find_element(By.XPATH, question_xpath).text
+            actual_answer = driver.find_element(By.XPATH, answer_xpath).text
+            actual_questions_and_answers[actual_question.split('\n')[0]] = actual_answer
 
-            index+=1
+        return actual_questions_and_answers
 
-        return actual_answers
-
-    @staticmethod
-    def move_to_dzen_page_by_click_on_yandex_logo(driver):
+    def move_to_dzen_page_by_click_on_yandex_logo(self, driver):
         driver.get(BasePageLocators.home_page_url)
 
-        scooter_base_page_object = ScooterBasePage(driver)
-
-        scooter_base_page_object.click_on_the_element(BasePageLocators.yandex_logo)
+        self.click_on_the_element(BasePageLocators.yandex_logo)
 
         #переход на страницу яндекс дзен
-        switch_to_tab_with_url(driver, BasePageLocators.dzen_url)
+        self.switch_to_tab_with_url(driver, BasePageLocators.dzen_url)
 
-        return wait_element_to_be_visible(driver, (By.XPATH, BasePageLocators.dzen_logo))
+        return self.wait_element_to_be_visible(driver, (By.XPATH, BasePageLocators.dzen_logo))
 
-    @staticmethod
-    def move_to_home_page_by_click_on_logo(driver, page):
+    def move_to_home_page_by_click_on_logo(self, driver, page):
         driver.get(page)
 
-        scooter_base_page_object = ScooterBasePage(driver)
-
-        scooter_base_page_object.click_on_the_element(BasePageLocators.scooter_logo)
-        full_text = wait_element_to_be_visible(driver, (By.XPATH, HomePageLocators.header)).text
+        self.click_on_the_element(BasePageLocators.scooter_logo)
+        full_text = self.wait_element_to_be_visible(driver, (By.XPATH, HomePageLocators.header)).text
 
         # берем первую часть до разделителя
         return full_text.split('\n')[0]
 
-    @staticmethod
-    def move_to_create_an_order_page_from_home_page(driver, order_button):
+    def move_to_create_an_order_page_from_home_page(self, driver, order_button):
         driver.get(BasePageLocators.home_page_url)
 
-        scooter_base_page_object = ScooterBasePage(driver)
+        self.wait_element_to_be_visible(driver, (By.XPATH, BasePageLocators.scooter_logo))
 
-        wait_element_to_be_visible(driver, (By.XPATH, BasePageLocators.scooter_logo))
-
-        ScooterBasePage.close_cookie_modal(driver)
+        self.close_cookie_modal()
 
         #переходим на страницу заказа
-        scooter_base_page_object.click_on_the_element(order_button)
+        self.click_on_the_element(order_button)
 
-        return wait_element_to_be_visible(driver, (By.XPATH, OrderPageLocators.header_first_page)).text
+        return self.wait_element_to_be_visible(driver, (By.XPATH, OrderPageLocators.header_first_page)).text
